@@ -43,7 +43,10 @@ export function CalendlyModal() {
             className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl h-[80vh] flex flex-col relative overflow-hidden"
           >
             <div className="flex items-center justify-between p-4 border-b border-gray-100 bg-gray-50">
-              <h3 className="font-bold text-navy">Book a Consultation</h3>
+              <div>
+                <h3 className="font-bold text-navy">Book a Free Consultation</h3>
+                <p className="text-xs text-gray-500 hidden sm:block">Tell us about your academic needs. Our team will review your requirements and get back to you within 24 hours.</p>
+              </div>
               <button 
                 onClick={closeModal}
                 className="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center text-gray-500 hover:text-navy hover:bg-gray-100 transition-colors"

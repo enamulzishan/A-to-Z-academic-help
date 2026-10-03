@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Mail, Phone, MapPin } from "lucide-react";
 
 export function Footer() {
@@ -11,8 +12,8 @@ export function Footer() {
           
           {/* Brand */}
           <div className="lg:col-span-1">
-            <Link href="/" className="text-2xl font-bold font-heading tracking-tight mb-4 inline-block">
-              A to Z <span className="text-gold">Academic Help</span>
+            <Link href="/" className="mb-4 inline-block">
+              <Image src="/atoz-academic.png" alt="A to Z Academic Help" width={200} height={60} className="h-16 w-auto" />
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed mb-6">
               From Level 3 to PhD — We Support Your Academic Journey! Professional academic guidance, research support, and study assistance.
@@ -49,11 +50,11 @@ export function Footer() {
             <ul className="space-y-4 text-sm text-gray-400">
               <li className="flex items-start">
                 <Mail className="w-5 h-5 text-gold mr-3 flex-shrink-0" />
-                <a href="mailto:contact@atozacademichelp.co.uk" className="hover:text-gold transition-colors">contact@atozacademichelp.co.uk</a>
+                <a href="mailto:atozacademichelp@gmail.com" className="hover:text-gold transition-colors">atozacademichelp@gmail.com</a>
               </li>
               <li className="flex items-start">
                 <Phone className="w-5 h-5 text-gold mr-3 flex-shrink-0" />
-                <a href="https://wa.me/447000000000" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors">WhatsApp: +44 7000 000000</a>
+                <a href="https://wa.me/8801570234599" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors">WhatsApp: 01570234599</a>
               </li>
               <li className="flex items-start">
                 <MapPin className="w-5 h-5 text-gold mr-3 flex-shrink-0" />

@@ -17,7 +17,7 @@ export function WhatsAppWidget() {
     <AnimatePresence>
       {isVisible && (
         <motion.a
-          href="https://wa.me/447000000000"
+          href="https://wa.me/8801570234599"
           target="_blank"
           rel="noopener noreferrer"
           initial={{ scale: 0, opacity: 0 }}

@@ -3,6 +3,7 @@ import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Timeline } from "@/components/ui/Timeline";
 import { StickyCTA } from "@/components/ui/StickyCTA";
 import { RelatedServices } from "@/components/services/RelatedServices";
+import { ChecklistDownloadSection } from "@/components/ui/ChecklistDownloadSection";
 
 export const metadata: Metadata = {
   title: "Research Proposal Writing Service",
@@ -50,6 +51,8 @@ export default function ResearchProposalPage() {
 
         </div>
       </div>
+
+      <ChecklistDownloadSection />
 
       {/* Related Services */}
       <div className="container mx-auto px-4">

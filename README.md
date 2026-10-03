@@ -1,36 +1,84 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# A to Z Academic Help 🎓
 
-## Getting Started
+A professional academic consultation and support website built with modern web technologies. This platform offers services for students and researchers (from Level 3 to PhD) such as research proposals, university applications, and direct academic support.
 
-First, run the development server:
+## 🚀 Tech Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Framework**: [Next.js](https://nextjs.org/) (App Router)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Backend/Forms**: Google Apps Script (Google Sheets integration)
+- **Language**: TypeScript
+
+## ✨ Key Features
+
+- **Modern & Responsive UI**: Built with Tailwind CSS and enhanced with Framer Motion animations.
+- **Lead Generation Forms**: Contact pages and checklist downloads that submit data directly to a Google Sheet via a custom Apps Script endpoint.
+- **Direct PDF Downloads**: Users can download resources (like the Research Proposal Checklist) instantly upon providing their email.
+- **Global Components**: Includes a sticky WhatsApp widget, cookie consent banner, and breadcrumb navigation.
+- **MDX Support**: Configured for Markdown/MDX content rendering.
+
+## 📂 Project Structure (Where is everything?)
+
+Understanding the codebase layout:
+
+```text
+📦 a-to-z-academic-help
+ ┣ 📂 public               # Static files: images, logos, and downloadable PDFs (e.g., research-proposal-checklist.pdf)
+ ┣ 📂 src
+ ┃ ┣ 📂 app                # Next.js App Router (All Page Routes)
+ ┃ ┃ ┣ 📂 about            # About Us page
+ ┃ ┃ ┣ 📂 contact          # Main Contact page & Form
+ ┃ ┃ ┣ 📂 faq              # Frequently Asked Questions
+ ┃ ┃ ┣ 📂 legal            # Privacy, Terms, Cookie Policies
+ ┃ ┃ ┣ 📂 resources        # Academic resources and guides
+ ┃ ┃ ┣ 📂 services         # Detailed service pages (PhD support, proposals, etc.)
+ ┃ ┃ ┣ 📂 team             # Team/Experts profiles
+ ┃ ┃ ┣ 📜 layout.tsx       # Root layout containing the Header, Footer, WhatsApp widget, etc.
+ ┃ ┃ ┗ 📜 page.tsx         # The main Homepage
+ ┃ ┃
+ ┃ ┣ 📂 components         # Reusable React Components
+ ┃ ┃ ┣ 📂 blog             # MDX rendering components (Table of contents, etc.)
+ ┃ ┃ ┣ 📂 home             # Homepage specific sections (Hero, etc.)
+ ┃ ┃ ┣ 📂 layout           # Header.tsx and Footer.tsx
+ ┃ ┃ ┣ 📂 services         # Service-specific UI blocks
+ ┃ ┃ ┗ 📂 ui               # Shared UI pieces (ChecklistDownloadSection, Breadcrumbs, SecureBadge, CookieBanner, etc.)
+ ┃ ┃
+ ┃ ┗ 📜 middleware.ts      # (If applicable) Next.js routing middleware
+ ┣ 📜 .env.local           # Environment variables (Google Script URLs, etc.)
+ ┗ 📜 package.json         # Project dependencies and scripts
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ⚙️ Setup & Installation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Clone the repository** (if you haven't already).
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+3. **Environment Variables**:
+   Create a `.env.local` file in the root directory and add your Google Apps Script URL for form submissions:
+   ```env
+   NEXT_PUBLIC_GOOGLE_SCRIPT_URL="https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec"
+   ```
+4. **Run the development server**:
+   ```bash
+   npm run dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+5. **Build for Production**:
+   ```bash
+   npm run build
+   npm run start
+   ```
 
-## Learn More
+## 📝 Form Submissions Architecture
 
-To learn more about Next.js, take a look at the following resources:
+The forms on this website (`/contact` and the `ChecklistDownloadSection`) do not use a traditional database. Instead, they send a `POST` request to a **Google Apps Script** URL. 
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Contact Form**: Sends `formType="contact"` and fills a 9-column structure in the "Contact Submissions" Google Sheet tab.
+- **Checklist Form**: Sends `formType="checklist"` and automatically triggers a local PDF download (`/research-proposal-checklist.pdf`) while simultaneously logging the email in the "Checklist Downloads" tab.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+*(To modify the Google Sheet logic, you must edit the `doPost` function directly in the Extensions > Apps Script panel of the connected Google Sheet).*

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 
@@ -35,9 +36,7 @@ export function Header() {
     >
       <div className="container mx-auto px-4 max-w-7xl flex items-center justify-between">
         <Link href="/" className="flex items-center space-x-2">
-          <span className="text-2xl font-bold text-navy font-heading tracking-tight">
-            A to Z <span className="text-gold">Academic Help</span>
-          </span>
+          <Image src="/atoz-academic.png" alt="A to Z Academic Help" width={150} height={50} className="h-12 w-auto" priority />
         </Link>
 
         {/* Desktop Nav */}
@@ -54,10 +53,10 @@ export function Header() {
             </Link>
           ))}
           <Link 
-            href="?book=true" 
+            href="/contact" 
             className="bg-gold text-white px-5 py-2.5 rounded-lg text-sm font-bold hover:bg-gold/90 transition-colors shadow-sm hover:shadow-md"
           >
-            Book a Consultation
+            Book a Free Consultation
           </Link>
         </nav>
 
@@ -86,11 +85,11 @@ export function Header() {
             </Link>
           ))}
           <Link 
-            href="?book=true" 
+            href="/contact" 
             onClick={() => setMobileMenuOpen(false)}
             className="bg-gold text-white px-5 py-3 rounded-lg text-center font-bold"
           >
-            Book a Consultation
+            Book a Free Consultation
           </Link>
         </div>
       )}

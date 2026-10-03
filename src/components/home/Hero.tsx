@@ -94,10 +94,10 @@ export function Hero() {
               Explore Services
             </Link>
             <Link 
-              href="?book=true" 
+              href="/contact" 
               className="bg-white/10 text-white font-bold py-4 px-8 rounded-lg hover:bg-white/20 transition-colors backdrop-blur-sm text-center border border-white/20"
             >
-              Book a Consultation
+              Book a Free Consultation
             </Link>
           </motion.div>
         </motion.div>

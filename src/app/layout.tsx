@@ -5,8 +5,6 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppWidget } from "@/components/ui/WhatsAppWidget";
 import { CookieBanner } from "@/components/ui/CookieBanner";
-import { LeadCaptureModal } from "@/components/ui/LeadCaptureModal";
-import { CalendlyModal } from "@/components/ui/CalendlyModal";
 import "./globals.css";
 
 const inter = Inter({
@@ -35,7 +33,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${poppins.variable} antialiased flex flex-col min-h-screen`}>
+      <body suppressHydrationWarning className={`${inter.variable} ${poppins.variable} antialiased flex flex-col min-h-screen`}>
         <Header />
         <main className="flex-grow pt-[72px]">
           {children}
@@ -43,10 +41,6 @@ export default function RootLayout({
         <Footer />
         <WhatsAppWidget />
         <CookieBanner />
-        <LeadCaptureModal />
-        <Suspense fallback={null}>
-          <CalendlyModal />
-        </Suspense>
       </body>
     </html>
   );

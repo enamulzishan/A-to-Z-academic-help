@@ -2,8 +2,12 @@ import Link from "next/link";
 import { ArrowRight, BookOpen, CheckCircle2 } from "lucide-react";
 import { LevelsInteractive } from "@/components/ui/LevelsInteractive";
 import { TestimonialCarousel } from "@/components/ui/TestimonialCarousel";
+import { ChecklistDownloadSection } from "@/components/ui/ChecklistDownloadSection";
 import { getAllPosts } from "@/lib/blog";
 import { Hero } from "@/components/home/Hero";
+import { TeamPreviewSection } from "@/components/ui/TeamPreviewSection";
+import { HowWeWorkSection } from "@/components/ui/HowWeWorkSection";
+import { CallToActionSection } from "@/components/ui/CallToActionSection";
 
 export default function Home() {
   const latestPosts = getAllPosts().slice(0, 3);
@@ -59,7 +63,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonials */}
+      <HowWeWorkSection />
+      
+      <TeamPreviewSection />
+
+      {/* Testimonials - Temporarily hidden until verified ones are provided 
       <section className="py-24 bg-gray-50 border-y border-gray-100">
         <div className="container mx-auto">
           <div className="text-center mb-16">
@@ -69,6 +77,9 @@ export default function Home() {
           <TestimonialCarousel />
         </div>
       </section>
+      */}
+
+      <ChecklistDownloadSection />
 
       {/* Latest Resources */}
       <section className="py-20 bg-white">
@@ -94,6 +105,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <CallToActionSection />
     </div>
   );
 }
