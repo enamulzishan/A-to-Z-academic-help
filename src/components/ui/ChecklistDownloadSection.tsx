@@ -13,34 +13,25 @@ export function ChecklistDownloadSection() {
     
     setFormState('loading');
     
-    const formData = new FormData();
-    formData.append("email", email);
-    formData.append("form_name", "Free Research Proposal Checklist");
-    formData.append("formType", "checklist");
-    formData.append("sourcePage", window.location.pathname);
-    
-    const scriptUrl = process.env.NEXT_PUBLIC_GOOGLE_SCRIPT_URL;
-
-    if (!scriptUrl) {
-      console.error("Google Apps Script URL is missing in environment variables.");
-      setFormState('error');
-      return;
-    }
-    
     try {
-      const urlSearchParams = new URLSearchParams();
-      formData.forEach((value, key) => {
-        urlSearchParams.append(key, value.toString());
+      const payload = {
+        email,
+        form_name: "Free Research Proposal Checklist",
+        form_type: "checklist",
+        source_page: typeof window !== "undefined" ? window.location.pathname : "",
+      };
+
+      const res = await fetch("/api/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
       });
 
-      await fetch(scriptUrl, {
-        method: "POST",
-        mode: "no-cors",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: urlSearchParams.toString()
-      });
+      if (!res.ok) {
+        throw new Error("Failed to submit form");
+      }
       
       // Trigger direct download
       const link = document.createElement('a');

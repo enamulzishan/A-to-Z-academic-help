@@ -1,14 +1,18 @@
 import { Metadata } from "next";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
-import { faqs } from "@/data/faqs";
 import { FAQAccordion } from "@/components/ui/FAQAccordion";
+import { getFAQs } from "@/lib/data";
+
+export const revalidate = 60;
 
 export const metadata: Metadata = {
-  title: "Frequently Asked Questions",
+  title: "Frequently Asked Questions | A to Z Academic Help",
   description: "Find answers to common questions about our academic support, research consulting, PhD guidance, and payment processes.",
 };
 
-export default function FAQPage() {
+export default async function FAQPage() {
+  const faqs = await getFAQs();
+
   return (
     <div className="min-h-screen bg-gray-50 pb-24">
       {/* Hero Section */}

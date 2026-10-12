@@ -9,8 +9,11 @@ import { TeamPreviewSection } from "@/components/ui/TeamPreviewSection";
 import { HowWeWorkSection } from "@/components/ui/HowWeWorkSection";
 import { CallToActionSection } from "@/components/ui/CallToActionSection";
 
-export default function Home() {
+import { getApprovedTestimonials } from "@/lib/data";
+
+export default async function Home() {
   const latestPosts = getAllPosts().slice(0, 3);
+  const testimonials = await getApprovedTestimonials();
 
   return (
     <div className="min-h-screen bg-white">
@@ -67,17 +70,18 @@ export default function Home() {
       
       <TeamPreviewSection />
 
-      {/* Testimonials - Temporarily hidden until verified ones are provided 
-      <section className="py-24 bg-gray-50 border-y border-gray-100">
-        <div className="container mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-navy mb-4">Student Success</h2>
-            <p className="text-gray-600">Hear from those who have achieved their academic goals with us.</p>
+      {/* Testimonials (from Supabase - only approved ones) */}
+      {testimonials.length > 0 && (
+        <section className="py-24 bg-gray-50 border-y border-gray-100">
+          <div className="container mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-bold text-navy mb-4">Student Success</h2>
+              <p className="text-gray-600">Hear from those who have achieved their academic goals with us.</p>
+            </div>
+            <TestimonialCarousel testimonials={testimonials} />
           </div>
-          <TestimonialCarousel />
-        </div>
-      </section>
-      */}
+        </section>
+      )}
 
       <ChecklistDownloadSection />
 

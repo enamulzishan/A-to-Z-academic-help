@@ -35,34 +35,34 @@ export default function ContactPage() {
     setFormState('loading');
     
     const formData = new FormData(e.currentTarget);
-    const scriptUrl = process.env.NEXT_PUBLIC_GOOGLE_SCRIPT_URL;
-
-    if (!scriptUrl) {
-      console.error("Google Apps Script URL is missing in environment variables.");
-      setFormState('error');
-      return;
-    }
     
     try {
-      const urlSearchParams = new URLSearchParams();
-      formData.forEach((value, key) => {
-        urlSearchParams.append(key, value.toString());
-      });
-      urlSearchParams.append("formType", "contact");
+      const payload = {
+        form_type: "contact",
+        full_name: formData.get("name"),
+        email: formData.get("email"),
+        phone: formData.get("phone"),
+        academic_level: formData.get("level"),
+        subject: formData.get("subject"),
+        message: formData.get("message"),
+        source_page: typeof window !== "undefined" ? window.location.pathname : "/contact",
+      };
 
-      await fetch(scriptUrl, {
+      const res = await fetch("/api/submit", {
         method: "POST",
-        mode: "no-cors",
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
+          "Content-Type": "application/json",
         },
-        body: urlSearchParams.toString()
+        body: JSON.stringify(payload),
       });
-      
-      // Google Apps Script with no-cors returns an opaque response (status 0)
-      // If it didn't throw a network error, the request was successfully sent
-      setFormState('success');
+
+      if (res.ok) {
+        setFormState('success');
+      } else {
+        setFormState('error');
+      }
     } catch (error) {
+      console.error("Form submission error:", error);
       setFormState('error');
     }
   };

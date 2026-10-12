@@ -1,37 +1,11 @@
 import Link from "next/link";
-import { ArrowRight, GraduationCap } from "lucide-react";
+import Image from "next/image";
+import { ArrowRight, GraduationCap, User } from "lucide-react";
+import { getTeamMembers } from "@/lib/data";
 
-const TEAM_MEMBERS = [
-  {
-    id: 1,
-    name: "[TO BE PROVIDED]",
-    qualification: "[Qualification]",
-    university: "[University]",
-    expertise: "[Subject Expertise]",
-    researchArea: "[Research Area]",
-    experience: "[X] Years",
-  },
-  {
-    id: 2,
-    name: "[TO BE PROVIDED]",
-    qualification: "[Qualification]",
-    university: "[University]",
-    expertise: "[Subject Expertise]",
-    researchArea: "[Research Area]",
-    experience: "[X] Years",
-  },
-  {
-    id: 3,
-    name: "[TO BE PROVIDED]",
-    qualification: "[Qualification]",
-    university: "[University]",
-    expertise: "[Subject Expertise]",
-    researchArea: "[Research Area]",
-    experience: "[X] Years",
-  },
-];
+export async function TeamPreviewSection() {
+  const members = (await getTeamMembers()).slice(0, 3);
 
-export function TeamPreviewSection() {
   return (
     <section className="py-24 bg-white border-y border-gray-100">
       <div className="container mx-auto px-4 max-w-6xl">
@@ -48,22 +22,38 @@ export function TeamPreviewSection() {
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
-          {TEAM_MEMBERS.map((member) => (
-            <div key={member.id} className="bg-gray-50 border border-gray-100 rounded-2xl p-6 hover:shadow-lg transition-shadow relative overflow-hidden">
-              <div className="w-16 h-16 bg-navy rounded-full flex items-center justify-center mb-6 shadow-md">
-                <GraduationCap className="w-8 h-8 text-gold" />
+          {members.map((member) => (
+            <div key={member.id} className="bg-gray-50 border border-gray-100 rounded-2xl p-6 hover:shadow-lg transition-shadow relative overflow-hidden flex flex-col justify-between">
+              <div>
+                <div className="w-16 h-16 rounded-full overflow-hidden mb-6 border-2 border-gold/30 relative">
+                  {member.photo_url || member.image ? (
+                    <Image
+                      src={member.photo_url || member.image}
+                      alt={member.name}
+                      fill
+                      className="object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-navy flex items-center justify-center text-gold">
+                      <GraduationCap className="w-8 h-8" />
+                    </div>
+                  )}
+                </div>
+                <h3 className="text-xl font-bold text-navy mb-1">{member.name}</h3>
+                <p className="text-gold font-medium text-sm mb-3">{member.role}</p>
+                {member.qualification && (
+                  <p className="text-xs text-gray-500 font-medium mb-4">{member.qualification}</p>
+                )}
+                
+                {member.bio && (
+                  <p className="text-sm text-gray-600 line-clamp-3 mb-6 leading-relaxed">
+                    {member.bio}
+                  </p>
+                )}
               </div>
-              <h3 className="text-xl font-bold text-navy mb-1">{member.name}</h3>
-              <p className="text-gold font-medium text-sm mb-4">{member.qualification} | {member.university}</p>
               
-              <div className="space-y-3 text-sm text-gray-600 mb-6">
-                <div><strong className="text-navy">Expertise:</strong> {member.expertise}</div>
-                <div><strong className="text-navy">Research Area:</strong> {member.researchArea}</div>
-                <div><strong className="text-navy">Experience:</strong> {member.experience}</div>
-              </div>
-              
-              <Link href="/team" className="text-sm font-semibold text-navy hover:text-gold flex items-center">
-                View Profile <ArrowRight className="w-4 h-4 ml-1" />
+              <Link href="/team" className="text-sm font-semibold text-navy hover:text-gold flex items-center pt-4 border-t border-gray-200/60 mt-auto">
+                View Consultant Profile <ArrowRight className="w-4 h-4 ml-1" />
               </Link>
             </div>
           ))}

@@ -1,23 +1,41 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { testimonials } from "@/data/testimonials";
+import { testimonials as defaultTestimonials } from "@/data/testimonials";
 import { Quote, ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { TestimonialItem } from "@/lib/data";
 
-export function TestimonialCarousel() {
+interface TestimonialCarouselProps {
+  testimonials?: TestimonialItem[];
+}
+
+export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) {
+  const items = testimonials && testimonials.length > 0 ? testimonials : defaultTestimonials.map(t => ({
+    id: t.id,
+    quote: t.quote,
+    author: t.author,
+    role: t.role,
+    university: t.university,
+    approved: true,
+    display_order: 1
+  }));
+
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // Auto-play
   useEffect(() => {
+    if (items.length <= 1) return;
     const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+      setCurrentIndex((prev) => (prev + 1) % items.length);
     }, 8000);
     return () => clearInterval(timer);
-  }, []);
+  }, [items.length]);
 
-  const next = () => setCurrentIndex((prev) => (prev + 1) % testimonials.length);
-  const prev = () => setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  const next = () => setCurrentIndex((prev) => (prev + 1) % items.length);
+  const prev = () => setCurrentIndex((prev) => (prev - 1 + items.length) % items.length);
+
+  if (items.length === 0) return null;
 
   return (
     <div className="relative max-w-4xl mx-auto px-12">
@@ -50,30 +68,33 @@ export function TestimonialCarousel() {
           >
             <Quote className="w-12 h-12 text-gold/30 mb-6" />
             <p className="text-xl md:text-2xl text-navy italic leading-relaxed mb-8">
-              "{testimonials[currentIndex].quote}"
+              &quot;{items[currentIndex]?.quote}&quot;
             </p>
             <div>
-              <h4 className="font-bold text-navy">{testimonials[currentIndex].author}</h4>
+              <h4 className="font-bold text-navy">{items[currentIndex]?.author}</h4>
               <p className="text-sm text-gray-500 font-medium">
-                {testimonials[currentIndex].role}, {testimonials[currentIndex].university}
+                {items[currentIndex]?.role}
+                {items[currentIndex]?.university ? `, ${items[currentIndex]?.university}` : ""}
               </p>
             </div>
           </motion.div>
         </AnimatePresence>
       </div>
 
-      <div className="flex justify-center space-x-2 mt-8">
-        {testimonials.map((_, idx) => (
-          <button
-            key={idx}
-            onClick={() => setCurrentIndex(idx)}
-            className={`w-2.5 h-2.5 rounded-full transition-all ${
-              idx === currentIndex ? "bg-gold w-8" : "bg-gray-300 hover:bg-gray-400"
-            }`}
-            aria-label={`Go to slide ${idx + 1}`}
-          />
-        ))}
-      </div>
+      {items.length > 1 && (
+        <div className="flex justify-center space-x-2 mt-8">
+          {items.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => setCurrentIndex(idx)}
+              className={`w-2.5 h-2.5 rounded-full transition-all ${
+                idx === currentIndex ? "bg-gold w-8" : "bg-gray-300 hover:bg-gray-400"
+              }`}
+              aria-label={`Go to slide ${idx + 1}`}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

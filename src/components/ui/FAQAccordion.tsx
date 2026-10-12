@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { FAQ } from "@/data/faqs";
 import { ChevronDown, Search } from "lucide-react";
+import { FAQItem } from "@/lib/data";
 
 interface FAQAccordionProps {
-  faqs: FAQ[];
+  faqs: FAQItem[];
 }
 
 export function FAQAccordion({ faqs }: FAQAccordionProps) {
@@ -22,7 +22,7 @@ export function FAQAccordion({ faqs }: FAQAccordionProps) {
     if (!acc[faq.category]) acc[faq.category] = [];
     acc[faq.category].push(faq);
     return acc;
-  }, {} as Record<string, FAQ[]>);
+  }, {} as Record<string, FAQItem[]>);
 
   return (
     <div className="w-full max-w-4xl mx-auto">
